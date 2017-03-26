@@ -19,13 +19,17 @@ $sql = "SELECT *
 
 $result = mysqli_query($conn, $sql);
 $co = 0;
+$tmp = 0;
+$mazVar = 0;
+
  while ($row = mysqli_fetch_assoc($result)) {
     $threeLocal = $row["location"];
     
     $local = explode(", ", $threeLocal); // split by ( ,)
     if (in_array($location1, $local)) { //find row that contain $location
         $co = $co+1;
-        echo $threeLocal."0101010101";
+        //echo $threeLocal."0101010101";
+        
         
     }
      
