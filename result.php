@@ -29,25 +29,28 @@ $result = mysqli_query($conn, $sql);
     
     $local = explode(", ", $threeLocal); // split by ( ,)
     if($age==$ageDB){
-        if(strcasecmp($location, $local[0]) == 0){
-            //do cosine similarity
-        }else if(strcasecmp($location, $local[1) == 0){
-            //do cosine similarity
-        }else if(strcasecmp($location, $local[2]) == 0){
-            //do cosine similarity
-        }else{
-            //end
-        }
-    }else{
-        if(strcasecmp($location, $local[0]) == 0){
-            //do cosine similarity
-        }else if(strcasecmp($location, $local[1) == 0){
-            //do cosine similarity
-        }else if(strcasecmp($location, $local[2]) == 0){
-            //do cosine similarity
-        }else{
-            //end
-        }
+        if (in_array($location, $threeLocal)) {
+            echo "Got Irix";
+}
+//        if(strcasecmp($location, $local[0]) == 0){
+//            //do cosine similarity
+//        }else if(strcasecmp($location, $local[1) == 0){
+//            //do cosine similarity
+//        }else if(strcasecmp($location, $local[2]) == 0){
+//            //do cosine similarity
+//        }else{
+//            //end
+//        }
+//    }else{
+//        if(strcasecmp($location, $local[0]) == 0){
+//            //do cosine similarity
+//        }else if(strcasecmp($location, $local[1) == 0){
+//            //do cosine similarity
+//        }else if(strcasecmp($location, $local[2]) == 0){
+//            //do cosine similarity
+//        }else{
+//            //end
+//        }
     }
     //varไหนได้เอาvarนั้น
 }
