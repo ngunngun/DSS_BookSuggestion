@@ -51,9 +51,7 @@
             </h4>
             <br>
             <h4 style="color:black">Please enter your location :
-                <input type="text" name="location1" id="location1" style="width: 50px;" required>
-                <input type="text" name="location2" id="location2" style="width: 50px;" required>
-                <input type="text" name="location3" id="location3" style="width: 50px;" required>
+                <input type="text" name="location1" id="location1" required>
             </h4>
 
             <br><br>

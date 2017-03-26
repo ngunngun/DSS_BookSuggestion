@@ -3,7 +3,7 @@
 include('connect.php');
 
 $age = $_POST['age'];
-$location = $_POST['location'];
+$location1 = $_POST['location1'];
 
 //$sql = "SELECT *
 //        FROM DSS_Users
@@ -18,41 +18,17 @@ $sql = "SELECT *
         WHERE 1;";
 
 $result = mysqli_query($conn, $sql);
-
+$co = 0;
  while ($row = mysqli_fetch_assoc($result)) {
     $threeLocal = $row["location"];
-    $ageDB = $row["age"];
-     
-    $var1=0;
-    $var2=0;
-    $var3=0;
     
     $local = explode(", ", $threeLocal); // split by ( ,)
-    if($age==$ageDB){
-        if (in_array($location, $threeLocal)) {
-            echo "Got Irix";
-}
-//        if(strcasecmp($location, $local[0]) == 0){
-//            //do cosine similarity
-//        }else if(strcasecmp($location, $local[1) == 0){
-//            //do cosine similarity
-//        }else if(strcasecmp($location, $local[2]) == 0){
-//            //do cosine similarity
-//        }else{
-//            //end
-//        }
-//    }else{
-//        if(strcasecmp($location, $local[0]) == 0){
-//            //do cosine similarity
-//        }else if(strcasecmp($location, $local[1) == 0){
-//            //do cosine similarity
-//        }else if(strcasecmp($location, $local[2]) == 0){
-//            //do cosine similarity
-//        }else{
-//            //end
-//        }
+    if (in_array($location1, $local)) { //find row that contain $location
+        $co = $co+1;
+        echo $threeLocal."0101010101";
+        
     }
-    //varไหนได้เอาvarนั้น
+     
 }
 
 ?>
