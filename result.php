@@ -3,20 +3,52 @@
 include('connect.php');
 
 $age = $_POST['age'];
-$location1 = $_POST['location1'];
-$location2 = $_POST['location2'];
-$location3 = $_POST['location3'];
-$location = $location1 . ", " . $location2 . ", " . $location3;
+$location = $_POST['location'];
+
+//$sql = "SELECT *
+//        FROM DSS_Users
+//        WHERE location='$location' AND age='$age';";
+//
+//$result = mysqli_query($conn, $sql);
+//
+//$num_rows = mysqli_num_rows($result); //count row of result
 
 $sql = "SELECT *
-            FROM DSS_Users
-            WHERE location='$location' AND age='$age';";
-print ($sql);
+        FROM DSS_Users
+        WHERE 1;";
 
 $result = mysqli_query($conn, $sql);
 
-$num_rows = mysqli_num_rows($result);
-print ($num_rows);
+ while ($row = mysqli_fetch_assoc($result)) {
+    $threeLocal = $row["location"];
+    $ageDB = $row["age"];
+     
+    $var1=0;
+    $var2=0;
+    $var3=0;
+    $local = explode(", ", $threeLocal); // split by ( ,)
+    if($age==$ageDB){
+        if(strcasecmp($location, $local[0]) == 0){
+            //do cosine similarity
+        }else if(strcasecmp($location, $local[1) == 0){
+            //do cosine similarity
+        }else if(strcasecmp($location, $local[2]) == 0){
+            //do cosine similarity
+        }else{
+            //end
+        }
+    }else{
+        if(strcasecmp($location, $local[0]) == 0){
+            //do cosine similarity
+        }else if(strcasecmp($location, $local[1) == 0){
+            //do cosine similarity
+        }else if(strcasecmp($location, $local[2]) == 0){
+            //do cosine similarity
+        }else{
+            //end
+        }
+    }
+}
 
 ?>
 
