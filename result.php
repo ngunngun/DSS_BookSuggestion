@@ -26,6 +26,7 @@ $result = mysqli_query($conn, $sql);
     $var1=0;
     $var2=0;
     $var3=0;
+    
     $local = explode(", ", $threeLocal); // split by ( ,)
     if($age==$ageDB){
         if(strcasecmp($location, $local[0]) == 0){
@@ -48,6 +49,7 @@ $result = mysqli_query($conn, $sql);
             //end
         }
     }
+    //varไหนได้เอาvarนั้น
 }
 
 ?>
