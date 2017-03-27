@@ -12,7 +12,6 @@ $sql = "SELECT *
 
 $result = mysqli_query($conn, $sql);
 $tmp = 0;
-$mazVar = 0;
 $asciiCity = "";
 $asciiCountry = "";
 
@@ -31,11 +30,25 @@ while ($row = mysqli_fetch_assoc($result)) {
     $threeLocal = $row["location"];
     $dbAge = $row["age"];
     $local = explode(", ", $threeLocal); // split by ( ,)
-
-    if (in_array($city, $local)&&in_array($country, $local)) { //find row that contain $location
-        
-        
+    
+    if($age == $dbAge){
+        if ((in_array($city, $local)==0) && (in_array($country, $local)==0)) {
+            $tmp = 3;
+        }else if((in_array($country, $local)==0) && (in_array($city, $local)!=0)){
+            $tmp = 2;
+        }else{
+            $tmp = 1;
+        }
+    }else{
+        if ((in_array($city, $local)==0) && (in_array($country, $local)==0)) {
+            $tmp = 2;
+        }else if((in_array($country, $local)==0) && (in_array($city, $local)!=0)){
+            $tmp = 1;
+        }else{
+            $tmp = 0;
+        }
     }
+    
      
 }
 
@@ -107,7 +120,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                       $sql = "SELECT *
                             FROM `DSS_Users`, `DSS_Books`, `DSS_Rating`
                             WHERE DSS_Users.userID = DSS_Rating.userID AND
-                            DSS_Rating.isbn = DSS_Books.isbn;";
+                            DSS_Rating.isbn = DSS_Books.isbn AND
+                            age = '$age' AND location LIKE '%$city, $country';";
 
                       $result = mysqli_query($conn, $sql);
 
