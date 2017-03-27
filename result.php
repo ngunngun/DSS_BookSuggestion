@@ -3,7 +3,8 @@
 include('connect.php');
 
 $age = $_POST['age'];
-$location1 = $_POST['location1'];
+$city = $_POST['city'];
+$country = $_POST['country'];
 
 $sql = "SELECT *
         FROM DSS_Users
@@ -12,22 +13,27 @@ $sql = "SELECT *
 $result = mysqli_query($conn, $sql);
 $tmp = 0;
 $mazVar = 0;
-$asciilocation = "";
+$asciiCity = "";
+$asciiCountry = "";
 
-for($i = 0; $i!=strlen($location1); $i++){
-    //ord(), convert string to ascii
-    $asciilocation = $asciilocation.ord($location1[$i]);
-}
-echo $asciilocation;
+//for($i = 0; $i!=strlen($city); $i++){
+//    //ord(), convert string to ascii
+//    $asciiCity = $asciiCity.ord($city[$i]);
+//}
+//echo $asciiCity;
+//
+//for($i = 0; $i!=strlen($country); $i++){
+//    $asciiCountry = $asciiCountry.ord($country[$i]);
+//}
+//echo $asciiCountry;
  
 while ($row = mysqli_fetch_assoc($result)) {
     $threeLocal = $row["location"];
-    
+    $dbAge = $row["age"];
     $local = explode(", ", $threeLocal); // split by ( ,)
-    if (in_array($location1, $local)) { //find row that contain $location
-        //calculate
-        //compare $local with $location1
-        //first, tranform $local to be $localNum
+
+    if (in_array($city, $local)&&in_array($country, $local)) { //find row that contain $location
+        
         
     }
      
@@ -78,42 +84,46 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         <div class="mainContent">
 
-            <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                <thead>
-                <tr>
-                    <th>Book image</th>
-                    <th>Book name</th>
-                    <th>Author(s)</th>
-                    <th>Other</th>
-                </tr>
-                </thead>
-                <tfoot>
-                <tr>
-                    <th>Book image</th>
-                    <th>Book name</th>
-                    <th>Author(s)</th>
-                    <th>Other</th>
-                </tr>
-                </tfoot>
-                <tbody>
 
-                <tr>
-                    <td>img</td>
-                    <td>harry potter</td>
-                    <td>JK</td>
-                    <td>other</td>
-                </tr>
+                <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+          				<thead>
+                        <tr>
+                            <th>Book image</th>
+                            <th>Book name</th>
+                            <th>Author(s)</th>
+                            <th>Rating</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>Book image</th>
+                            <th>Book name</th>
+                            <th>Author(s)</th>
+                            <th>Rating</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                <?php
+                      $sql = "SELECT *
+                            FROM `DSS_Users`, `DSS_Books`, `DSS_Rating`
+                            WHERE DSS_Users.userID = DSS_Rating.userID AND
+                            DSS_Rating.isbn = DSS_Books.isbn;";
 
+                      $result = mysqli_query($conn, $sql);
 
-                <tr>
-                    <td>img</td>
-                    <td>harry potter</td>
-                    <td>JK</td>
-                    <td>other</td>
-                </tr>
-
+                      while ($row = mysqli_fetch_assoc($result)) {
+                        $paid = false;
+                    echo '<tr>
+                            <td>'.$row["img"].')</td>
+                            <td>'.$row["title"].'</td>
+                            <td>'.$row["author"].'</td>
+                            <td>'.$row["rating"].'</td>
+                          </tr>
+                        ';
+                      }
+                 ?>
                 </tbody>
-            </table>
+              </table>
 
         </div>
 
