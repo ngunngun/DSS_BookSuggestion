@@ -5,31 +5,29 @@ include('connect.php');
 $age = $_POST['age'];
 $location1 = $_POST['location1'];
 
-//$sql = "SELECT *
-//        FROM DSS_Users
-//        WHERE location='$location' AND age='$age';";
-//
-//$result = mysqli_query($conn, $sql);
-//
-//$num_rows = mysqli_num_rows($result); //count row of result
-
 $sql = "SELECT *
         FROM DSS_Users
         WHERE 1;";
 
 $result = mysqli_query($conn, $sql);
-$co = 0;
 $tmp = 0;
 $mazVar = 0;
+$asciilocation = "";
 
- while ($row = mysqli_fetch_assoc($result)) {
+for($i = 0; $i!=strlen($location1); $i++){
+    //ord(), convert string to ascii
+    $asciilocation = $asciilocation.ord($location1[$i]);
+}
+echo $asciilocation;
+ 
+while ($row = mysqli_fetch_assoc($result)) {
     $threeLocal = $row["location"];
     
     $local = explode(", ", $threeLocal); // split by ( ,)
     if (in_array($location1, $local)) { //find row that contain $location
-        $co = $co+1;
-        //echo $threeLocal."0101010101";
-        
+        //calculate
+        //compare $local with $location1
+        //first, tranform $local to be $localNum
         
     }
      
