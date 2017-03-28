@@ -11,43 +11,14 @@ $sql = "SELECT *
         WHERE 1;";
 
 $result = mysqli_query($conn, $sql);
-$tmp = 0;
-$asciiCity = "";
-$asciiCountry = "";
-
-//for($i = 0; $i!=strlen($city); $i++){
-//    //ord(), convert string to ascii
-//    $asciiCity = $asciiCity.ord($city[$i]);
-//}
-//echo $asciiCity;
-//
-//for($i = 0; $i!=strlen($country); $i++){
-//    $asciiCountry = $asciiCountry.ord($country[$i]);
-//}
-//echo $asciiCountry;
  
 while ($row = mysqli_fetch_assoc($result)) {
-    $threeLocal = $row["location"];
+    $townDB = $row["town"];
+    $cityDB = $row["city"];
+    $countryDB = $row["country"];
     $dbAge = $row["age"];
     $local = explode(", ", $threeLocal); // split by ( ,)
     
-    if($age == $dbAge){
-        if ((in_array($city, $local)==0) && (in_array($country, $local)==0)) {
-            $tmp = 3;
-        }else if((in_array($country, $local)==0) && (in_array($city, $local)!=0)){
-            $tmp = 2;
-        }else{
-            $tmp = 1;
-        }
-    }else{
-        if ((in_array($city, $local)==0) && (in_array($country, $local)==0)) {
-            $tmp = 2;
-        }else if((in_array($country, $local)==0) && (in_array($city, $local)!=0)){
-            $tmp = 1;
-        }else{
-            $tmp = 0;
-        }
-    }
     
      
 }
@@ -60,14 +31,18 @@ while ($row = mysqli_fetch_assoc($result)) {
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>Result | Book Suggestions</title>
-
+        
         <!-- Bootstrap core CSS -->
         <link href="assets/css/bootstrap.css" rel="stylesheet">
 
-        <!-- Custom styles for this template -->
         <link href="assets/css/soon.css" rel="stylesheet">
+        
+        <link href="assets/css/blog-post.css" rel="stylesheet">
 
         <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet'
               type='text/css'>
@@ -97,7 +72,6 @@ while ($row = mysqli_fetch_assoc($result)) {
 
         <div class="mainContent">
 
-
                 <table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
           				<thead>
                         <tr>
@@ -121,14 +95,16 @@ while ($row = mysqli_fetch_assoc($result)) {
                             FROM `DSS_Users`, `DSS_Books`, `DSS_Rating`
                             WHERE DSS_Users.userID = DSS_Rating.userID AND
                             DSS_Rating.isbn = DSS_Books.isbn AND
-                            age = '$age' AND location LIKE '%$city, $country';";
+                            age = '$age' AND country = '$country';";
+                            
+                            //echo $sql;
 
                       $result = mysqli_query($conn, $sql);
 
                       while ($row = mysqli_fetch_assoc($result)) {
                         $paid = false;
                     echo '<tr>
-                            <td>'.$row["img"].')</td>
+                            <td><img src ='.$row["img"].' width=50% height=auto></td>
                             <td>'.$row["title"].'</td>
                             <td>'.$row["author"].'</td>
                             <td>'.$row["rating"].'</td>
