@@ -50,6 +50,9 @@
                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' required> years old
             </h4>
             <br>
+            <h4 style="color:black">Please enter your town :
+                <input type="text" name="town" id="town" required>
+            </h4>
             <h4 style="color:black">Please enter your city :
                 <input type="text" name="city" id="city" required>
             </h4>

@@ -3,6 +3,7 @@
 include('connect.php');
 
 $age = $_POST['age'];
+$town = $_POST['town'];
 $city = $_POST['city'];
 $country = $_POST['country'];
 
@@ -18,8 +19,6 @@ while ($row = mysqli_fetch_assoc($result)) {
     $countryDB = $row["country"];
     $dbAge = $row["age"];
     $local = explode(", ", $threeLocal); // split by ( ,)
-    
-    
      
 }
 
@@ -95,7 +94,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                             FROM `DSS_Users`, `DSS_Books`, `DSS_Rating`
                             WHERE DSS_Users.userID = DSS_Rating.userID AND
                             DSS_Rating.isbn = DSS_Books.isbn AND
-                            age = '$age' AND country = '$country';";
+                            age = '$age' AND town = '$town'
+                            AND city = '$city' AND country = '$country';";
                             
                             //echo $sql;
 
