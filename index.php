@@ -46,24 +46,24 @@
         <form method="post" action="result.php">
 
             <h4 style="color:black">Please enter your age :
-                <input type="text" name="age" id="age" maxlength="3"
+                <input value="37" type="text" name="age" id="age" maxlength="3"
                        onkeypress='return event.charCode >= 48 && event.charCode <= 57' required> years old
             </h4>
             <br>
             <h4 style="color:black">Please enter your town :
-                <input type="text" name="town" id="town" required>
+                <input value="lakewood" type="text" name="town" id="town" required>
             </h4>
             <h4 style="color:black">Please enter your city :
-                <input type="text" name="city" id="city" required>
+                <input value="colorado" type="text" name="city" id="city" required>
             </h4>
            
             <h4 style="color:black">Please enter your country :
-                <input type="text" name="country" id="country" required>
+                <input value="usa" type="text" name="country" id="country" required>
             </h4>
 
             <br><br>
-
-            <button type="submit" class="btn-lg btn-success">Search</button>
+            
+            <button type="submit" class="btn-lg btn-success">Search </button>
 
         </form>
     </div>

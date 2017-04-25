@@ -7,20 +7,6 @@ $town = $_POST['town'];
 $city = $_POST['city'];
 $country = $_POST['country'];
 
-$sql = "SELECT *
-        FROM DSS_Users
-        WHERE 1;";
-
-$result = mysqli_query($conn, $sql);
- 
-while ($row = mysqli_fetch_assoc($result)) {
-    $townDB = $row["town"];
-    $cityDB = $row["city"];
-    $countryDB = $row["country"];
-    $dbAge = $row["age"];
-    $local = explode(", ", $threeLocal); // split by ( ,)
-     
-}
 
 ?>
 
@@ -80,37 +66,90 @@ while ($row = mysqli_fetch_assoc($result)) {
                             <th>Rating</th>
                         </tr>
                         </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Book image</th>
-                            <th>Book name</th>
-                            <th>Author(s)</th>
-                            <th>Rating</th>
-                        </tr>
-                        </tfoot>
+                        
                         <tbody>
                 <?php
-                      $sql = "SELECT *
-                            FROM `DSS_Users`, `DSS_Books`, `DSS_Rating`
-                            WHERE DSS_Users.userID = DSS_Rating.userID AND
-                            DSS_Rating.isbn = DSS_Books.isbn AND
-                            age = '$age' AND town = '$town'
-                            AND city = '$city' AND country = '$country';";
-                            
-                            //echo $sql;
+                    //Find then select similar USER 
+                    $sql = "SELECT *, ABS(age-'".$age."') as diff_age
+                            FROM DSS_Users
+                            WHERE town = '".$town."'
+                            ORDER BY diff_age ASC
+                            LIMIT 1;";
 
-                      $result = mysqli_query($conn, $sql);
+                    $result = mysqli_query($conn, $sql);
+                    echo("<br>".$sql);
 
-                      while ($row = mysqli_fetch_assoc($result)) {
-                        $paid = false;
-                    echo '<tr>
-                            <td><img src ='.$row["img"].' width=50% height=auto></td>
-                            <td>'.$row["title"].'</td>
-                            <td>'.$row["author"].'</td>
-                            <td>'.$row["rating"].'</td>
-                          </tr>
-                        ';
-                      }
+                    if (mysqli_num_rows($result)==0) { 
+                        $sql = "SELECT *, ABS(age-'".$age."') as diff_age
+                            FROM DSS_Users
+                            WHERE city = '".$city."'
+                            ORDER BY diff_age ASC
+                            LIMIT 1;";
+                        $result = mysqli_query($conn, $sql);
+                        echo("<br>".$sql);
+                        if (mysqli_num_rows($result)==0) { 
+                            $sql = "SELECT *, ABS(age-'".$age."') as diff_age
+                                FROM DSS_Users
+                                WHERE country = '".$country."'
+                                ORDER BY diff_age ASC
+                                LIMIT 1;";
+                            $result = mysqli_query($conn, $sql);
+                        }
+                        echo("<br>".$sql);
+                    }
+
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $userID = $row["userID"];
+                    }
+
+                    // End of Find then select similar USER 
+                    
+
+                    // Find then select hight rating book
+                    $sql = "SELECT isbn, rating 
+                            FROM DSS_Rating 
+                            Where userID='".$userID."' and rating = (SELECT MAX(rating) FROM DSS_Rating )
+                            ORDER BY RAND();";
+                    echo("<br>".$sql);
+                    $result = mysqli_query($conn, $sql);
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $isbn = $row["isbn"];
+                        // Find then select close distant books/ 5 books
+                        $sql = "SELECT * 
+                                FROM DSS_Distance 
+                                Where first_id='".$isbn."'
+                                ORDER BY distance ASC
+                                LIMIT 5;";
+                        echo("<br>".$sql);
+                        $result2 = mysqli_query($conn, $sql);
+                        echo($i++);
+                        if (mysqli_num_rows($result2)!=0) { 
+                            echo("<br>not null >>> ". $isbn);
+                            while ($row = mysqli_fetch_assoc($result2)) {
+                            $isbn_r = $row["SECOND_ID"];
+                            $sql = "SELECT *
+                                    FROM DSS_Books 
+                                    Where isbn='".$isbn_r."';";
+                            echo("<br>".$sql);
+                            $result3 = mysqli_query($conn, $sql);
+                                while ($row = mysqli_fetch_assoc($result3)) {
+                                echo '<tr>
+                                        <td><img src ='.$row["img"].' width=50% height=auto></td>
+                                        <td>'.$row["title"].'</td>
+                                        <td>'.$row["author"].'</td>
+                                        <td>'.$row["rating"].'</td>
+                                    </tr>
+                                    ';
+                                }
+                            }
+                            break;
+                        }
+                        // End of Find then select close distant books
+                    }
+                    // End of Find then select hight rating book
+
+                    
                  ?>
                 </tbody>
               </table>
