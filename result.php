@@ -63,7 +63,6 @@ $country = $_POST['country'];
                             <th>Book image</th>
                             <th>Book name</th>
                             <th>Author(s)</th>
-                            <th>Rating</th>
                         </tr>
                         </thead>
                         
@@ -77,7 +76,7 @@ $country = $_POST['country'];
                             LIMIT 1;";
 
                     $result = mysqli_query($conn, $sql);
-                    echo("<br>".$sql);
+                    
 
                     if (mysqli_num_rows($result)==0) { 
                         $sql = "SELECT *, ABS(age-'".$age."') as diff_age
@@ -86,7 +85,7 @@ $country = $_POST['country'];
                             ORDER BY diff_age ASC
                             LIMIT 1;";
                         $result = mysqli_query($conn, $sql);
-                        echo("<br>".$sql);
+                        
                         if (mysqli_num_rows($result)==0) { 
                             $sql = "SELECT *, ABS(age-'".$age."') as diff_age
                                 FROM DSS_Users
@@ -95,7 +94,7 @@ $country = $_POST['country'];
                                 LIMIT 1;";
                             $result = mysqli_query($conn, $sql);
                         }
-                        echo("<br>".$sql);
+                        
                     }
 
 
@@ -111,7 +110,7 @@ $country = $_POST['country'];
                             FROM DSS_Rating 
                             Where userID='".$userID."' and rating = (SELECT MAX(rating) FROM DSS_Rating )
                             ORDER BY RAND();";
-                    echo("<br>".$sql);
+                    
                     $result = mysqli_query($conn, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $isbn = $row["isbn"];
@@ -121,24 +120,22 @@ $country = $_POST['country'];
                                 Where first_id='".$isbn."'
                                 ORDER BY distance ASC
                                 LIMIT 5;";
-                        echo("<br>".$sql);
+                        
                         $result2 = mysqli_query($conn, $sql);
-                        echo($i++);
+                       
                         if (mysqli_num_rows($result2)!=0) { 
-                            echo("<br>not null >>> ". $isbn);
                             while ($row = mysqli_fetch_assoc($result2)) {
                             $isbn_r = $row["SECOND_ID"];
                             $sql = "SELECT *
                                     FROM DSS_Books 
                                     Where isbn='".$isbn_r."';";
-                            echo("<br>".$sql);
+                            
                             $result3 = mysqli_query($conn, $sql);
                                 while ($row = mysqli_fetch_assoc($result3)) {
                                 echo '<tr>
                                         <td><img src ='.$row["img"].' width=50% height=auto></td>
                                         <td>'.$row["title"].'</td>
                                         <td>'.$row["author"].'</td>
-                                        <td>'.$row["rating"].'</td>
                                     </tr>
                                     ';
                                 }

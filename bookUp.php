@@ -17,8 +17,8 @@ if (isset($_POST['submit'])) {
             $title = $fileop[1];
             $author = $fileop[2];
             $publishYear = $fileop[3];
-            $publisher = $fileop[4];
-            $img = $fileop[7];
+            $publisher = $fileop[7];
+            $img = $fileop[4];
 
             $sql = "INSERT INTO `DSS_Books`(`isbn`, `title`, `author`, `publishYear`, `publisher`, `img`) VALUES ('$isbn', '$title', '$author', '$publishYear', '$publisher', '$img');";
 
